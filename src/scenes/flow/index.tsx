@@ -12,6 +12,7 @@ const flowIndex = new Map([
   ["/registerSender", 0],
   ["/registerBeneficiary", 1],
   ["/choose", 2],
+  ["/createQuotation", 3],
   ["/quotation", 3],
   ["/transaction", 4]
 ])

@@ -7,6 +7,7 @@ import Choose from './scenes/choose';
 import SenderRegister from './scenes/register/sender';
 import BeneficiaryRegister from './scenes/register/beneficiary';
 import Flow from './scenes/flow';
+import CreateQuotation from './scenes/quotation';
 
 const App: FC = () => {
   
@@ -25,6 +26,9 @@ const App: FC = () => {
           </Route>
           <Route path="/registerBeneficiary">
             <BeneficiaryRegister></BeneficiaryRegister>
+          </Route>
+          <Route path="/createQuotation">
+            <CreateQuotation></CreateQuotation>
           </Route>
         </Switch>
       </Router>

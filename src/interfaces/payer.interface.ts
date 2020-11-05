@@ -3,7 +3,7 @@ import { ITransactionType } from "./transaction.interface";
 export interface IPayer {
     id: number
     name: string
-    currency: number
+    currency: string
     country_iso_code: number
     transaction_types: ITransactionType
 };
