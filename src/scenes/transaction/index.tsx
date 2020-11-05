@@ -1,14 +1,16 @@
-import { Form, Button, Layout, Row, Col, message, Input }  from 'antd';
+import { Form, Button, Layout, Row, Col, message, Input, Modal }  from 'antd';
 import React, { FC, useState } from 'react';
 import 'antd/dist/antd.css';
+import './Transaction.css';
 
 import Title from 'antd/lib/typography/Title';
 import { useLocation } from 'react-router-dom';
 
 import { v4 } from 'uuid';
-import { createTransaction, setTransactionList } from '../../services/api';
+import { createTransaction, refreshTransactionStatus } from '../../services/api';
 import { ICreateTransactionParams } from '../../interfaces/transaction.interface';
 import { IUser } from '../../interfaces/user.interface';
+import { CheckOutlined, ClockCircleOutlined, StopOutlined, WarningOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 
@@ -24,6 +26,62 @@ function getUser(key: string): IUser | undefined {
 
 interface IState {
   quotationId?: string
+  isConfirmHidden: boolean
+  transactionId?: number
+}
+
+const modalConfirm = (status: string) => {
+  switch(status) {
+    case "10000":
+      Modal.confirm({
+        title: "Created",
+        icon: <ClockCircleOutlined />,
+        okText: "I got."
+      });
+      break;
+    case "20000":
+      Modal.confirm({
+        title: "Confirmed",
+        icon: <CheckOutlined />,
+        okText: "I got."
+      });
+      break;
+    case "5000":
+      Modal.confirm({
+        title: "Submitted",
+        icon: <CheckOutlined />,
+        okText: "I got."
+      });
+      break;
+    case "7000":
+      Modal.confirm({
+        title: "Completed",
+        icon: <CheckOutlined />,
+        okText: "I got."
+      });
+      break;
+    case "90400":
+      Modal.error({
+        title: "Payer Currently Unavailable",
+        icon: <StopOutlined />,
+        okText: "I got."
+      })
+      break;
+    case "90201":
+      Modal.error({
+        title: "Barred Beneficiary",
+        icon: <StopOutlined />,
+        okText: "I got."
+      })
+      break;
+    case "90305":
+      Modal.error({
+        title: "LIMITATIONS On TRANSACTION Value",
+        icon: <WarningOutlined />,
+        okText: "I got."
+      })
+      break;
+  }
 }
 
 
@@ -34,7 +92,8 @@ const CreateTransaction: FC = (props) => {
 
   const quotationId = useQuery().get("quotationId") || undefined;
   const [state, setState] = useState<IState>({
-    quotationId
+    quotationId,
+    isConfirmHidden: true
   });
 
   const submitAndSaveInfo = async (values: {
@@ -69,10 +128,28 @@ const CreateTransaction: FC = (props) => {
     console.info(transaction);
     if (transaction.status === "10000") {
         message.success("transfer success!");
-        setTransactionList(transaction.id)
+        // setTransactionList(transaction.id)
+        setState({
+          quotationId,
+          isConfirmHidden: false,
+          transactionId: transaction.id
+        });
     } else {
         message.error(`transfer error: ${transaction.statusMessage}`)
     }
+  }
+
+  const confirm = async (id: number | undefined) => {
+    if (!id) {
+      return;
+    }
+    const transaction = await refreshTransactionStatus(id);
+    modalConfirm(transaction.status);
+    setState({
+      transactionId: transaction.id,
+      isConfirmHidden: true,
+      quotationId: quotationId
+    })
   }
 
   return (
@@ -105,9 +182,12 @@ const CreateTransaction: FC = (props) => {
               <Input placeholder="Please input your msisdn"></Input>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>
+              <Button type="primary" htmlType="submit" block hidden={!state.isConfirmHidden}>
                 Submit
               </Button>
+              <Form.Item>
+                <Button block hidden={state.isConfirmHidden} onClick={e => confirm(state.transactionId)}>Confirm</Button>
+              </Form.Item>
             </Form.Item>
           </Form>
           </Col>

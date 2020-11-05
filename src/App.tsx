@@ -9,6 +9,7 @@ import BeneficiaryRegister from './scenes/register/beneficiary';
 import Flow from './scenes/flow';
 import CreateQuotation from './scenes/quotation';
 import CreateTransaction from './scenes/transaction';
+import ListTransactionStatus from './scenes/transaction/listConfirm';
 
 const App: FC = () => {
   
@@ -16,9 +17,10 @@ const App: FC = () => {
     <div>
       <Router>
         <Flow></Flow>
-        <Route path="/">
-        </Route>
         <Switch>
+          <Route path="/confirm">
+            <ListTransactionStatus></ListTransactionStatus>
+          </Route>
           <Route path="/choose">
             <Choose></Choose>
           </Route>

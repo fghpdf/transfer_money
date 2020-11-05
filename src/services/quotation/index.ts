@@ -13,10 +13,11 @@ const createTransaction = async (quotationId: number, params: ICreateTransaction
     return data;
 }
 
-const setTransactionList = (transactionId: number, status = "UNKNOWN") => {
+const setTransactionList = (transactionId: number, status = "90401", statusMessage = "UNKNOWN") => {
     const insert: ITransactionStatus = {
         id: transactionId,
-        status
+        status,
+        statusMessage
     };
 
     const oldDataStr = window.localStorage.getItem('transactions_status');
@@ -25,10 +26,10 @@ const setTransactionList = (transactionId: number, status = "UNKNOWN") => {
         return;
     }
 
-    const oldData: Array<ITransactionStatus> = JSON.parse(oldDataStr);
-    oldData.push(insert);
+    const oldData: Set<ITransactionStatus> = new Set(JSON.parse(oldDataStr));
+    oldData.add(insert)
 
-    window.localStorage.setItem('transactions_status', JSON.stringify(oldData));
+    window.localStorage.setItem('transactions_status', JSON.stringify(Array.from(oldData)));
     return;
 }
 
@@ -43,4 +44,9 @@ const getTransactionList = () => {
     return oldData;
 }
 
-export { createQuotation, createTransaction, setTransactionList, getTransactionList }
+const refreshTransactionStatus = async (id: number) => {
+    const { data } = await Axios.post<ITransaction>(`http://localhost:8080/api/transactions/${id}/confirm`);
+    return data;
+}
+
+export { createQuotation, createTransaction, setTransactionList, getTransactionList, refreshTransactionStatus }

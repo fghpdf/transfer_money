@@ -42,4 +42,5 @@ export interface ICreateTransactionParams {
 export interface ITransactionStatus {
   id: number
   status: string
+  statusMessage: string
 }
