@@ -1,5 +1,13 @@
 @import '~antd/dist/antd.css';
 
+body, html {
+  height: 100vh;
+}
+
+div#root {
+  height: 100%;
+}
+
 .App {
   text-align: center;
 }

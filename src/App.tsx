@@ -1,26 +1,34 @@
 import React, { FC } from 'react';
 import './App.css';
 
-import { Router, Route, Switch } from 'react-router';
+import { Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 
-import { createBrowserHistory } from 'history';
 import Choose from './scenes/choose';
-
-const customHistory = createBrowserHistory();
-
+import SenderRegister from './scenes/register/sender';
+import BeneficiaryRegister from './scenes/register/beneficiary';
+import Flow from './scenes/flow';
 
 const App: FC = () => {
   
   return (
-    <Router history={customHistory}>
-      <Route path="/">
-      </Route>
-      <Switch>
-        <Route path="/choose">
-          <Choose></Choose>
+    <div>
+      <Router>
+        <Flow></Flow>
+        <Route path="/">
         </Route>
-      </Switch>
-    </Router>
+        <Switch>
+          <Route path="/choose">
+            <Choose></Choose>
+          </Route>
+          <Route path="/registerSender">
+            <SenderRegister></SenderRegister>
+          </Route>
+          <Route path="/registerBeneficiary">
+            <BeneficiaryRegister></BeneficiaryRegister>
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   )
 }
 
