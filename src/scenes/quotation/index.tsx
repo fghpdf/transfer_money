@@ -166,7 +166,7 @@ const CreateQuotation: FC = () => {
               </Button>
             </Form.Item>
             <Form.Item>
-              <Button block hidden={state.isNextHidden}><Link to="/choose">Next</Link></Button>
+              <Button block hidden={state.isNextHidden}><Link to={`/createTransaction?quotationId=${state.quotation?.id}`} >Next</Link></Button>
             </Form.Item>
           </Form>
           </Col>

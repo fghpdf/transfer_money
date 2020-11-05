@@ -14,7 +14,8 @@ const flowIndex = new Map([
   ["/choose", 2],
   ["/createQuotation", 3],
   ["/quotation", 3],
-  ["/transaction", 4]
+  ["/transaction", 4],
+  ["/createTransaction", 5]
 ])
 
 const Flow: FC = () => {

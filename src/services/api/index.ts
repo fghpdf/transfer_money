@@ -1,5 +1,5 @@
 import { listCountries } from '../country';
 import { listPayers } from '../payer';
-import { createQuotation } from '../quotation';
+import { createQuotation, createTransaction, setTransactionList, getTransactionList } from '../quotation';
 
-export { listCountries, listPayers, createQuotation };
+export { listCountries, listPayers, createQuotation, createTransaction, setTransactionList, getTransactionList };
