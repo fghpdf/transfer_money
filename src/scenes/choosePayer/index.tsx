@@ -1,11 +1,9 @@
-import { Layout, Skeleton } from "antd";
+import { Skeleton } from "antd";
 import React from "react";
 import { FC, useEffect, useState } from "react";
 import PayerList from "../../components/payer";
 import { IPayer } from "../../interfaces/payer.interface";
 import { listPayers } from "../../services/api";
-
-const { Content } = Layout;
 
 const ChoosePayer: FC = () => {
   const [payers, setPayers] = useState<IPayer[]>([])
