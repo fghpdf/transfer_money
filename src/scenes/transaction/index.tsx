@@ -11,6 +11,7 @@ import { createTransaction, refreshTransactionStatus } from '../../services/api'
 import { ICreateTransactionParams } from '../../interfaces/transaction.interface';
 import { IUser } from '../../interfaces/user.interface';
 import { CheckOutlined, ClockCircleOutlined, StopOutlined, WarningOutlined } from '@ant-design/icons';
+import { confirmTransaction } from '../../services/quotation';
 
 const { Content } = Layout;
 
@@ -46,14 +47,14 @@ const modalConfirm = (status: string) => {
         okText: "I got."
       });
       break;
-    case "5000":
+    case "50000":
       Modal.confirm({
         title: "Submitted",
         icon: <CheckOutlined />,
         okText: "I got."
       });
       break;
-    case "7000":
+    case "70000":
       Modal.confirm({
         title: "Completed",
         icon: <CheckOutlined />,
@@ -127,8 +128,8 @@ const CreateTransaction: FC = (props) => {
     const transaction = await createTransaction(parseInt(state.quotationId), params);
     console.info(transaction);
     if (transaction.status === "10000") {
+        await confirmTransaction(transaction.id);
         message.success("transfer success!");
-        // setTransactionList(transaction.id)
         setState({
           quotationId,
           isConfirmHidden: false,
@@ -147,7 +148,7 @@ const CreateTransaction: FC = (props) => {
     modalConfirm(transaction.status);
     setState({
       transactionId: transaction.id,
-      isConfirmHidden: true,
+      isConfirmHidden: false,
       quotationId: quotationId
     })
   }
@@ -182,12 +183,12 @@ const CreateTransaction: FC = (props) => {
               <Input placeholder="Please input your msisdn"></Input>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" block hidden={!state.isConfirmHidden}>
+              <Button type="primary" htmlType="submit" block>
                 Submit
               </Button>
-              <Form.Item>
-                <Button block hidden={state.isConfirmHidden} onClick={e => confirm(state.transactionId)}>Confirm</Button>
-              </Form.Item>
+            </Form.Item>
+            <Form.Item>
+              <Button block hidden={state.isConfirmHidden} onClick={e => confirm(state.transactionId)}>Refresh</Button>
             </Form.Item>
           </Form>
           </Col>

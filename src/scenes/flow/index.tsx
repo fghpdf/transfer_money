@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FC } from "react";
 import 'antd/dist/antd.css';
 import './Flow.css';
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const { Step } = Steps;
 
@@ -13,14 +13,21 @@ const flowIndex = new Map([
   ["/registerBeneficiary", 1],
   ["/choose", 2],
   ["/createQuotation", 3],
-  ["/quotation", 3],
-  ["/transaction", 4],
-  ["/createTransaction", 5]
+  ["/createTransaction", 4]
 ])
 
 const Flow: FC = () => {
   const location = useLocation();
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(0);
+  const history = useHistory();
+
+  const handleChange = (current: number) => {
+    flowIndex.forEach((value, key) => {
+      if (value === current && value !== 4) {
+        history.push(key)
+      }
+    })
+  }
 
   useEffect(() => {
     const index = flowIndex.get(location.pathname);
@@ -31,7 +38,7 @@ const Flow: FC = () => {
     <Row justify="center" align="middle" className="flow">
       <Col flex="2"></Col>
       <Col flex="auto">
-        <Steps current={current}>
+        <Steps current={current} onChange={handleChange}>
           <Step key="registerSender" title="sender" icon={<UserOutlined />} />
           <Step key="registerBeneficiary" title="client" icon={<UserSwitchOutlined />} />
           <Step key="choose"  title="choose" icon={<WalletOutlined />} />

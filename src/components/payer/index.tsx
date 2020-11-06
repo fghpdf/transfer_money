@@ -30,7 +30,7 @@ const PayerList: FC<payerListProps> = (props) => {
               <DescriptionsItem label="C2B">{payer.transaction_types.C2B ? "✔️" : "❌"}</DescriptionsItem>
             </Descriptions>
           </Card>
-        </Col>  
+        </Col> 
     )  
   });
 

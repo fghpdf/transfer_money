@@ -20,14 +20,10 @@ const ChoosePayer: FC = () => {
 
   return (
     <div>
-      <Layout className="layout">
-        <Content style={{ padding: '0 50px' }}>
-          <h2>Choose your client currency</h2>
-          <Skeleton active loading={loading}>
-            <PayerList payers={payers}></PayerList>
-          </Skeleton>
-        </Content>
-      </Layout>
+      <h2>Choose your client currency</h2>
+      <PayerList payers={payers}></PayerList>
+      <Skeleton active loading={loading}>
+      </Skeleton>
     </div>
   );
 }
