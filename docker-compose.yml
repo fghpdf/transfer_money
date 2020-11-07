@@ -10,6 +10,10 @@ services:
     - server
 
   server:
+    environment:
+    # - THUNES_APIKEY=Can set API key here
+    # - THUNES_APISECRET=Can set API secret here
+    - GIN_MODE=release
     container_name: 'thunes_sample_backend'
     image: fghpdf/thunes_sample_backend
     expose: 

@@ -1,10 +1,7 @@
 import { AxiosRequestConfig } from "axios";
-import { env } from "process";
-
-const thunesBasicUrl = env.NODE_ENV === "production" ? "" : "http://localhost:8080";
 
 export const thunes = {
-  basicUrl: thunesBasicUrl
+  basicUrl: process.env.REACT_APP_THUNES_SERVER_URL
 }
 
 export const thunesBaseRequest: AxiosRequestConfig = {
