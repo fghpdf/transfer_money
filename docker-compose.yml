@@ -1,0 +1,16 @@
+version: '3.8'
+services: 
+
+  web:
+    container_name: 'thunes_sample_frontend'
+    build: ./
+    ports: 
+    - 80:80
+    depends_on: 
+    - server
+
+  server:
+    container_name: 'thunes_sample_backend'
+    image: fghpdf/thunes_sample_backend
+    expose: 
+    - 8080
