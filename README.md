@@ -40,10 +40,10 @@ Duo to time limited and unfamiliar with React.
 So I did not organize the project very well.
 
 In the future, I will:
-- [] organize components and get a wonderful level.
-- [] unit test.
-- [] CI/CD.
-- [] repeated code to public code.
-- [] deploy by Docker.
+- [ ] organize components and get a wonderful level.
+- [ ] unit test.
+- [ ] CI/CD.
+- [ ] repeated code to public code.
+- [ ] deploy by Docker.
 
 and so on.
